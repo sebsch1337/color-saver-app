@@ -1,9 +1,15 @@
 import "./Card.css";
 
-const Card = ({ card }) => {
+const Card = ({ hexCode }) => {
   return (
-    <li className="card-box" style={{ backgroundColor: card.hexCode }}>
-      <button className="card-button">{card.hexCode}</button>
+    <li className="card-box" style={{ backgroundColor: hexCode }}>
+      <button
+        className="card-button"
+        name="cardbutton"
+        onClick={(event) => navigator.clipboard.writeText(hexCode)}
+      >
+        {hexCode}
+      </button>
     </li>
   );
 };

@@ -5,7 +5,7 @@ const CardList = ({ cards }) => {
   return (
     <ul className="card-list">
       {cards.map((card) => (
-        <Card key={card.id} card={card} />
+        <Card key={card.id} hexCode={card.hexCode} />
       ))}
     </ul>
   );
