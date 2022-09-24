@@ -1,0 +1,29 @@
+.create__section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+}
+
+.create__box {
+  width: 15em;
+  height: 15em;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.create__input {
+  width: 10rem;
+  height: 3rem;
+  border: 3px solid black;
+  border-radius: 5px;
+}
+
+.create__input--colortext {
+  font-size: 1.2rem;
+  text-align: center;
+}
