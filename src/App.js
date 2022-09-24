@@ -6,18 +6,23 @@ import { v4 as uuid } from "uuid";
 import CardList from "./components/cardlist/CardList";
 import Create from "./components/create/Create";
 
+const randomHexCode = () => {
+  let n = (Math.random() * 0xfffff * 1000000).toString(16);
+  return "#" + n.slice(0, 6);
+};
+
 const db = [
   {
-    id: "a3k2k35",
-    hexCode: "#ccc",
+    id: uuid().slice(0, 8),
+    hexCode: randomHexCode(),
   },
   {
-    id: "j4o3m45",
-    hexCode: "#4c6ef5",
+    id: uuid().slice(0, 8),
+    hexCode: randomHexCode(),
   },
   {
-    id: "go43ogi",
-    hexCode: "#82c91e",
+    id: uuid().slice(0, 8),
+    hexCode: randomHexCode(),
   },
 ];
 
