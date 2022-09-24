@@ -1,6 +1,9 @@
 import "./App.css";
 
+import { useState, useEffect } from "react";
+
 import CardList from "./components/cardlist/CardList";
+import Create from "./components/create/Create";
 
 const db = [
   {
@@ -18,9 +21,12 @@ const db = [
 ];
 
 function App() {
+  const [colorCards, setColorCards] = useState(db);
+
   return (
     <div className="App">
-      <CardList cards={db} />
+      <Create />
+      <CardList cards={colorCards} />
     </div>
   );
 }
