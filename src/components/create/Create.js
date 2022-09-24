@@ -1,23 +1,32 @@
 import "./Create.css";
 
-const Create = () => {
+const Create = ({ selectedColor, setSelectedColor, onSubmitHandler }) => {
   return (
     <section className="create__section">
-      <form className="create__box">
+      <form
+        name="createForm"
+        className="create__box"
+        style={{ backgroundColor: selectedColor }}
+      >
         <input
           className="create__input"
           name="colorPicker"
           type="color"
-        ></input>
+          onChange={(event) => setSelectedColor(event.target.value)}
+          value={selectedColor}
+        />
         <input
           className="create__input create__input--colortext"
           name="colorText"
           type="text"
-        ></input>
+          onChange={(event) => setSelectedColor(event.target.value)}
+          value={selectedColor}
+        />
         <button
           className="create__input create__input--colortext"
           name="addButton"
           type="submit"
+          onClick={onSubmitHandler}
         >
           ADD
         </button>

@@ -1,6 +1,7 @@
 import "./App.css";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 import CardList from "./components/cardlist/CardList";
 import Create from "./components/create/Create";
@@ -22,10 +23,25 @@ const db = [
 
 function App() {
   const [colorCards, setColorCards] = useState(db);
+  const [selectedColor, setSelectedColor] = useState("#FFFFFF");
+
+  // useEffect(() => {}, [colorCards]);
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    setColorCards((prev) => [
+      ...prev,
+      { id: uuid().slice(0, 8), hexCode: selectedColor },
+    ]);
+  };
 
   return (
     <div className="App">
-      <Create />
+      <Create
+        selectedColor={selectedColor}
+        setSelectedColor={setSelectedColor}
+        onSubmitHandler={onSubmitHandler}
+      />
       <CardList cards={colorCards} />
     </div>
   );
