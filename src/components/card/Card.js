@@ -1,9 +1,9 @@
 import "./Card.css";
 
-const Card = () => {
+const Card = ({ card }) => {
   return (
     <li className="card-box">
-      <button className="card-button">#ccc</button>
+      <button className="card-button">{card.hexCode}</button>
     </li>
   );
 };
