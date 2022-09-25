@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.app__copy-info {
+  position: fixed;
+  bottom: 1vh;
+  right: -200px;
+  background-color: #ababab;
+  padding: 1em;
+  border-radius: 1em;
+  border: 3px solid black;
+  font-size: 0.8em;
+  transition: all ease-in 0.3s;
+}
+
+.app__copy-info--active {
+  right: 1vw;
+  transition: all ease-out 0.3s;
+}
