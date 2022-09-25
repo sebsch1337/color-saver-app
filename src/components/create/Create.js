@@ -2,7 +2,7 @@ import "./Create.css";
 
 const Create = ({
   selectedColor,
-  setSelectedColor,
+  onChangeSelectedColor,
   onSubmitHandler,
   colorPaletteId,
 }) => {
@@ -17,7 +17,7 @@ const Create = ({
           className="create__input"
           name="colorPicker"
           type="color"
-          onChange={(event) => setSelectedColor(event.target.value)}
+          onChange={(event) => onChangeSelectedColor(event.target.value)}
           value={selectedColor}
         />
         <input
@@ -25,14 +25,16 @@ const Create = ({
           name="colorText"
           type="text"
           onFocus={(event) => event.target.select()}
-          onChange={(event) => setSelectedColor(event.target.value)}
+          onChange={(event) => onChangeSelectedColor(event.target.value)}
           value={selectedColor}
         />
         <button
           className="create__input create__input--colortext"
           name="addButton"
           type="submit"
-          onClick={(event) => onSubmitHandler(event, colorPaletteId)}
+          onClick={(event) =>
+            onSubmitHandler(event, colorPaletteId, selectedColor)
+          }
         >
           ADD
         </button>

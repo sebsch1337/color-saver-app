@@ -15,12 +15,15 @@ function App() {
   const [colorCards, setColorCards] = useState(
     JSON.parse(localStorage.getItem("colorCards")) || []
   );
-  const [selectedColor, setSelectedColor] = useState(randomHexCode());
   const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
   const [copiedColor, setCopiedColor] = useState("");
   const [colorPalettes, setColorPalettes] = useState(
     JSON.parse(localStorage.getItem("colorPalettes")) || [
-      { id: uuid().slice(0, 8), name: "New Color Palette" },
+      {
+        id: uuid().slice(0, 8),
+        name: "New Color Palette",
+        defaultColor: randomHexCode(),
+      },
     ]
   );
 
@@ -34,7 +37,7 @@ function App() {
     localStorage.setItem("colorPalettes", JSON.stringify(colorPalettes));
   }, [colorPalettes]);
 
-  const onSubmitHandler = async (event, colorPaletteId) => {
+  const onSubmitHandler = async (event, colorPaletteId, selectedColor) => {
     event.preventDefault();
     const response = await fetch(colorApiURL + selectedColor.substring(1));
     const result = await response.json();
@@ -48,7 +51,17 @@ function App() {
         colorPaletteId: colorPaletteId,
       },
     ]);
-    setSelectedColor(randomHexCode());
+    onChangeSelectedColor(colorPaletteId, randomHexCode());
+  };
+
+  const onChangeSelectedColor = (id, defaultColor) => {
+    setColorPalettes(
+      colorPalettes.map((colorPalette) =>
+        colorPalette.id === id
+          ? { ...colorPalette, defaultColor: defaultColor }
+          : colorPalette
+      )
+    );
   };
 
   const onCopyHandler = (hexCode) => {
@@ -90,7 +103,11 @@ function App() {
   const onClickNewPalette = () => {
     setColorPalettes((prev) => [
       ...prev,
-      { id: uuid().slice(0, 8), name: "New Color Palette" },
+      {
+        id: uuid().slice(0, 8),
+        name: "New Color Palette",
+        defaultColor: randomHexCode(),
+      },
     ]);
   };
 
@@ -110,8 +127,8 @@ function App() {
             />
             <ul className="card__list">
               <Create
-                selectedColor={selectedColor}
-                setSelectedColor={setSelectedColor}
+                selectedColor={colorPalette.defaultColor}
+                onChangeSelectedColor={onChangeSelectedColor}
                 onSubmitHandler={onSubmitHandler}
                 colorPaletteId={colorPalette.id}
               />
