@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 import CardList from "./components/cardlist/CardList";
@@ -12,13 +12,20 @@ const randomHexCode = () => {
 };
 
 function App() {
-  const [colorCards, setColorCards] = useState([]);
+  const [colorCards, setColorCards] = useState(
+    localStorage.getItem("colorCards")
+      ? JSON.parse(localStorage.getItem("colorCards"))
+      : []
+  );
   const [selectedColor, setSelectedColor] = useState(randomHexCode());
   const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
   const [copiedColor, setCopiedColor] = useState("");
 
   const colorApiURL = "https://www.thecolorapi.com/id?hex=";
-  // useEffect(() => {}, [colorCards]);
+
+  useEffect(() => {
+    localStorage.setItem("colorCards", JSON.stringify(colorCards));
+  }, [colorCards]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
