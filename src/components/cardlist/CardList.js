@@ -9,16 +9,17 @@ const CardList = ({
 }) => {
   return (
     <ul className="card-list">
-      {cards.map((card) => (
-        <Card
-          key={card.id}
-          id={card.id}
-          hexCode={card.hexCode}
-          onChangeHandler={onChangeHandler}
-          onDeleteHandler={onDeleteHandler}
-          onCopyHandler={onCopyHandler}
-        />
-      ))}
+      {cards.length > 0 &&
+        cards.map((card) => (
+          <Card
+            key={card.id}
+            id={card.id}
+            hexCode={card.hexCode}
+            onChangeHandler={onChangeHandler}
+            onDeleteHandler={onDeleteHandler}
+            onCopyHandler={onCopyHandler}
+          />
+        ))}
     </ul>
   );
 };

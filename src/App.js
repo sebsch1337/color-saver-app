@@ -11,34 +11,33 @@ const randomHexCode = () => {
   return "#" + n.slice(0, 6);
 };
 
-const db = [
-  {
-    id: uuid().slice(0, 8),
-    hexCode: randomHexCode(),
-  },
-  {
-    id: uuid().slice(0, 8),
-    hexCode: randomHexCode(),
-  },
-  {
-    id: uuid().slice(0, 8),
-    hexCode: randomHexCode(),
-  },
-];
-
 function App() {
-  const [colorCards, setColorCards] = useState(db);
+  const [colorCards, setColorCards] = useState([]);
   const [selectedColor, setSelectedColor] = useState(randomHexCode());
   const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
   const [copiedColor, setCopiedColor] = useState("");
 
+  const colorApiURL = "https://www.thecolorapi.com/id?hex=";
   // useEffect(() => {}, [colorCards]);
 
-  const onSubmitHandler = (event) => {
+  // const fetchName = async (hexCode) => {
+  //   const response = await fetch(colorApiURL + hexCode);
+  //   const result = await response.json();
+  //   return result;
+  // };
+
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
+    const response = await fetch(colorApiURL + selectedColor.substring(1));
+    const result = await response.json();
+    console.log(result.name.value);
     setColorCards((prev) => [
       ...prev,
-      { id: uuid().slice(0, 8), hexCode: selectedColor },
+      {
+        id: uuid().slice(0, 8),
+        hexCode: selectedColor,
+        name: result.name.value,
+      },
     ]);
     setSelectedColor(randomHexCode());
   };
