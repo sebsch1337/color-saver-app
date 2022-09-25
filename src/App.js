@@ -30,6 +30,7 @@ function App() {
   const [colorCards, setColorCards] = useState(db);
   const [selectedColor, setSelectedColor] = useState(randomHexCode());
   const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
+  const [copiedColor, setCopiedColor] = useState("");
 
   // useEffect(() => {}, [colorCards]);
 
@@ -43,6 +44,7 @@ function App() {
   };
 
   const onCopyHandler = (hexCode) => {
+    setCopiedColor(hexCode);
     setCopyInfoClass("app__copy-info app__copy-info--active");
     navigator.clipboard.writeText(hexCode);
     setTimeout(() => {
@@ -80,7 +82,9 @@ function App() {
         onDeleteHandler={onDeleteHandler}
         onCopyHandler={onCopyHandler}
       />
-      <span className={copyInfoClass}>Colorcode copied!</span>
+      <span style={{ backgroundColor: copiedColor }} className={copyInfoClass}>
+        Colorcode copied!
+      </span>
     </div>
   );
 }
