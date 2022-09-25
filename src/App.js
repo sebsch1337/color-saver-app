@@ -13,13 +13,16 @@ const randomHexCode = () => {
 
 function App() {
   const [colorCards, setColorCards] = useState(
-    localStorage.getItem("colorCards")
-      ? JSON.parse(localStorage.getItem("colorCards"))
-      : []
+    JSON.parse(localStorage.getItem("colorCards")) || []
   );
   const [selectedColor, setSelectedColor] = useState(randomHexCode());
   const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
   const [copiedColor, setCopiedColor] = useState("");
+  const [colorPalettes, setColorPalettes] = useState(
+    JSON.parse(localStorage.getItem("colorPalettes")) || [
+      { id: uuid().slice(0, 8), name: "Color Palette 1" },
+    ]
+  );
 
   const colorApiURL = "https://www.thecolorapi.com/id?hex=";
 
@@ -27,7 +30,11 @@ function App() {
     localStorage.setItem("colorCards", JSON.stringify(colorCards));
   }, [colorCards]);
 
-  const onSubmitHandler = async (event) => {
+  useEffect(() => {
+    localStorage.setItem("colorPalettes", JSON.stringify(colorPalettes));
+  }, [colorPalettes]);
+
+  const onSubmitHandler = async (event, colorPaletteId) => {
     event.preventDefault();
     const response = await fetch(colorApiURL + selectedColor.substring(1));
     const result = await response.json();
@@ -38,6 +45,7 @@ function App() {
         id: uuid().slice(0, 8),
         hexCode: selectedColor,
         name: result.name.value,
+        colorPaletteId: colorPaletteId,
       },
     ]);
     setSelectedColor(randomHexCode());
@@ -62,6 +70,16 @@ function App() {
     );
   };
 
+  const onChangePaletteNameHandler = (id, event) => {
+    setColorPalettes(
+      colorPalettes.map((colorPalette) =>
+        colorPalette.id === id
+          ? { ...colorPalette, name: event.target.value }
+          : colorPalette
+      )
+    );
+  };
+
   const onDeleteHandler = (id, event) => {
     event.stopPropagation();
     setColorCards((prevCards) =>
@@ -71,17 +89,40 @@ function App() {
 
   return (
     <div className="App">
-      <Create
-        selectedColor={selectedColor}
-        setSelectedColor={setSelectedColor}
-        onSubmitHandler={onSubmitHandler}
-      />
-      <CardList
-        cards={colorCards}
-        onChangeHandler={onChangeHandler}
-        onDeleteHandler={onDeleteHandler}
-        onCopyHandler={onCopyHandler}
-      />
+      <h1 className="app__header">Color Saver App</h1>
+      {colorPalettes.map((colorPalette) => {
+        return (
+          <section key={colorPalette.id}>
+            <input
+              type="text"
+              className="colorPalette__header-input"
+              value={colorPalette.name}
+              onChange={(event) =>
+                onChangePaletteNameHandler(colorPalette.id, event)
+              }
+            />
+            <ul>
+              <Create
+                selectedColor={selectedColor}
+                setSelectedColor={setSelectedColor}
+                onSubmitHandler={onSubmitHandler}
+                colorPaletteId={colorPalette.id}
+              />
+              <CardList
+                cards={colorCards.filter(
+                  (colorCard) => colorCard.colorPaletteId === colorPalette.id
+                )}
+                onChangeHandler={onChangeHandler}
+                onDeleteHandler={onDeleteHandler}
+                onCopyHandler={onCopyHandler}
+              />
+            </ul>
+
+            <hr />
+          </section>
+        );
+      })}
+
       <span style={{ backgroundColor: copiedColor }} className={copyInfoClass}>
         Colorcode copied!
       </span>

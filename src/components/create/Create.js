@@ -1,8 +1,13 @@
 import "./Create.css";
 
-const Create = ({ selectedColor, setSelectedColor, onSubmitHandler }) => {
+const Create = ({
+  selectedColor,
+  setSelectedColor,
+  onSubmitHandler,
+  colorPaletteId,
+}) => {
   return (
-    <section className="create__section">
+    <li className="create__section">
       <form
         name="createForm"
         className="create__box"
@@ -27,12 +32,12 @@ const Create = ({ selectedColor, setSelectedColor, onSubmitHandler }) => {
           className="create__input create__input--colortext"
           name="addButton"
           type="submit"
-          onClick={onSubmitHandler}
+          onClick={(event) => onSubmitHandler(event, colorPaletteId)}
         >
           ADD
         </button>
       </form>
-    </section>
+    </li>
   );
 };
 
