@@ -3,8 +3,10 @@
   height: 15em;
   border: 3px solid black;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2em;
   position: relative;
 }
 
@@ -34,4 +36,8 @@
 
 .card__delete__icon {
   height: 1.5em;
+}
+
+.card__name {
+  font-size: 1.2em;
 }

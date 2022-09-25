@@ -4,6 +4,7 @@ import deleteIcon from "../../img/delete.svg";
 const Card = ({
   id,
   hexCode,
+  name,
   onChangeHandler,
   onDeleteHandler,
   onCopyHandler,
@@ -20,6 +21,7 @@ const Card = ({
       >
         <img className="card__delete__icon" src={deleteIcon} alt="" />
       </button>
+      <span className="card__name">{name}</span>
       <input
         className="card__input"
         onClick={(event) => event.stopPropagation()}
