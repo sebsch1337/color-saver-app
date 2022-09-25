@@ -38,19 +38,22 @@ function App() {
       ...prev,
       { id: uuid().slice(0, 8), hexCode: selectedColor },
     ]);
+    setSelectedColor(randomHexCode());
   };
 
-  const onChangeHandler = (id, inputValue) => {
+  const onChangeHandler = (id, event) => {
+    event.stopPropagation();
     setColorCards(
       colorCards.map((colorCard) =>
         colorCard.id === id
-          ? { ...colorCard, hexCode: inputValue }
+          ? { ...colorCard, hexCode: event.target.value }
           : { ...colorCard }
       )
     );
   };
 
-  const onDeleteHandler = (id) => {
+  const onDeleteHandler = (id, event) => {
+    event.stopPropagation();
     setColorCards((prevCards) =>
       prevCards.filter((colorCard) => colorCard.id !== id)
     );
