@@ -28,7 +28,7 @@ const db = [
 
 function App() {
   const [colorCards, setColorCards] = useState(db);
-  const [selectedColor, setSelectedColor] = useState("#FFFFFF");
+  const [selectedColor, setSelectedColor] = useState(randomHexCode());
 
   // useEffect(() => {}, [colorCards]);
 
@@ -40,6 +40,16 @@ function App() {
     ]);
   };
 
+  const onChangeHandler = (id, inputValue) => {
+    setColorCards(
+      colorCards.map((colorCard) =>
+        colorCard.id === id
+          ? { ...colorCard, hexCode: inputValue }
+          : { ...colorCard }
+      )
+    );
+  };
+
   return (
     <div className="App">
       <Create
@@ -47,7 +57,7 @@ function App() {
         setSelectedColor={setSelectedColor}
         onSubmitHandler={onSubmitHandler}
       />
-      <CardList cards={colorCards} />
+      <CardList cards={colorCards} onChangeHandler={onChangeHandler} />
     </div>
   );
 }
