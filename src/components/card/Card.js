@@ -6,7 +6,7 @@ const Card = ({ id, hexCode, onChangeHandler }) => {
       <input
         className="card__input"
         onChange={(event) => onChangeHandler(id, event.target.value)}
-        onClick={(event) => navigator.clipboard.writeText(hexCode)}
+        onClick={() => navigator.clipboard.writeText(hexCode)}
         value={hexCode}
       />
     </li>
