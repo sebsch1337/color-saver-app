@@ -20,7 +20,7 @@ function App() {
   const [copiedColor, setCopiedColor] = useState("");
   const [colorPalettes, setColorPalettes] = useState(
     JSON.parse(localStorage.getItem("colorPalettes")) || [
-      { id: uuid().slice(0, 8), name: "Color Palette 1" },
+      { id: uuid().slice(0, 8), name: "New Color Palette" },
     ]
   );
 
@@ -87,6 +87,13 @@ function App() {
     );
   };
 
+  const onClickNewPalette = () => {
+    setColorPalettes((prev) => [
+      ...prev,
+      { id: uuid().slice(0, 8), name: "New Color Palette" },
+    ]);
+  };
+
   return (
     <div className="App">
       <h1 className="app__header">Color Saver App</h1>
@@ -124,11 +131,13 @@ function App() {
                   />
                 ))}
             </ul>
-            <hr />
+            <hr className="colorPalette_line" />
           </section>
         );
       })}
-
+      <button onClick={onClickNewPalette} className="colorPalette__add-button">
+        ADD PALETTE
+      </button>
       <span style={{ backgroundColor: copiedColor }} className={copyInfoClass}>
         Colorcode copied!
       </span>
