@@ -19,6 +19,7 @@ const Create = ({ selectedColor, setSelectedColor, onSubmitHandler }) => {
           className="create__input create__input--colortext"
           name="colorText"
           type="text"
+          onFocus={(event) => event.target.select()}
           onChange={(event) => setSelectedColor(event.target.value)}
           value={selectedColor}
         />

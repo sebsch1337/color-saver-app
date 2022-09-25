@@ -20,17 +20,11 @@ function App() {
   const colorApiURL = "https://www.thecolorapi.com/id?hex=";
   // useEffect(() => {}, [colorCards]);
 
-  // const fetchName = async (hexCode) => {
-  //   const response = await fetch(colorApiURL + hexCode);
-  //   const result = await response.json();
-  //   return result;
-  // };
-
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const response = await fetch(colorApiURL + selectedColor.substring(1));
     const result = await response.json();
-    console.log(result.name.value);
+
     setColorCards((prev) => [
       ...prev,
       {

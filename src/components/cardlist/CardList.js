@@ -15,6 +15,7 @@ const CardList = ({
             key={card.id}
             id={card.id}
             hexCode={card.hexCode}
+            name={card.name}
             onChangeHandler={onChangeHandler}
             onDeleteHandler={onDeleteHandler}
             onCopyHandler={onCopyHandler}
