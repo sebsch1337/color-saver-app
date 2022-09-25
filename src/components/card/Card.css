@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .card__input {
@@ -14,4 +15,23 @@
   border-radius: 5px;
   font-size: 1.2rem;
   text-align: center;
+}
+
+.card__delete {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 1em;
+  height: 1em;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: white;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__delete__icon {
+  height: 1.5em;
 }
