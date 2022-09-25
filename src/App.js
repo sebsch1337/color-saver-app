@@ -29,6 +29,7 @@ const db = [
 function App() {
   const [colorCards, setColorCards] = useState(db);
   const [selectedColor, setSelectedColor] = useState(randomHexCode());
+  const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
 
   // useEffect(() => {}, [colorCards]);
 
@@ -41,13 +42,20 @@ function App() {
     setSelectedColor(randomHexCode());
   };
 
+  const onCopyHandler = (hexCode) => {
+    setCopyInfoClass("app__copy-info app__copy-info--active");
+    navigator.clipboard.writeText(hexCode);
+    setTimeout(() => {
+      setCopyInfoClass("app__copy-info");
+    }, 1500);
+  };
+
   const onChangeHandler = (id, event) => {
-    event.stopPropagation();
     setColorCards(
       colorCards.map((colorCard) =>
         colorCard.id === id
           ? { ...colorCard, hexCode: event.target.value }
-          : { ...colorCard }
+          : colorCard
       )
     );
   };
@@ -70,7 +78,9 @@ function App() {
         cards={colorCards}
         onChangeHandler={onChangeHandler}
         onDeleteHandler={onDeleteHandler}
+        onCopyHandler={onCopyHandler}
       />
+      <span className={copyInfoClass}>Colorcode copied!</span>
     </div>
   );
 }

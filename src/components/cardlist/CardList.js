@@ -1,7 +1,12 @@
 import "./CardList.css";
 import Card from "../card/Card";
 
-const CardList = ({ cards, onChangeHandler, onDeleteHandler }) => {
+const CardList = ({
+  cards,
+  onChangeHandler,
+  onDeleteHandler,
+  onCopyHandler,
+}) => {
   return (
     <ul className="card-list">
       {cards.map((card) => (
@@ -11,6 +16,7 @@ const CardList = ({ cards, onChangeHandler, onDeleteHandler }) => {
           hexCode={card.hexCode}
           onChangeHandler={onChangeHandler}
           onDeleteHandler={onDeleteHandler}
+          onCopyHandler={onCopyHandler}
         />
       ))}
     </ul>
