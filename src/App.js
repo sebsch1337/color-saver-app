@@ -50,6 +50,12 @@ function App() {
     );
   };
 
+  const onDeleteHandler = (id) => {
+    setColorCards((prevCards) =>
+      prevCards.filter((colorCard) => colorCard.id !== id)
+    );
+  };
+
   return (
     <div className="App">
       <Create
@@ -57,7 +63,11 @@ function App() {
         setSelectedColor={setSelectedColor}
         onSubmitHandler={onSubmitHandler}
       />
-      <CardList cards={colorCards} onChangeHandler={onChangeHandler} />
+      <CardList
+        cards={colorCards}
+        onChangeHandler={onChangeHandler}
+        onDeleteHandler={onDeleteHandler}
+      />
     </div>
   );
 }
