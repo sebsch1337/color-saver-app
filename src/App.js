@@ -3,7 +3,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
-import CardList from "./components/cardlist/CardList";
+import Card from "./components/card/Card";
 import Create from "./components/create/Create";
 
 const randomHexCode = () => {
@@ -101,23 +101,29 @@ function App() {
                 onChangePaletteNameHandler(colorPalette.id, event)
               }
             />
-            <ul>
+            <ul className="card__list">
               <Create
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
                 onSubmitHandler={onSubmitHandler}
                 colorPaletteId={colorPalette.id}
               />
-              <CardList
-                cards={colorCards.filter(
+              {colorCards
+                .filter(
                   (colorCard) => colorCard.colorPaletteId === colorPalette.id
-                )}
-                onChangeHandler={onChangeHandler}
-                onDeleteHandler={onDeleteHandler}
-                onCopyHandler={onCopyHandler}
-              />
+                )
+                .map((card) => (
+                  <Card
+                    key={card.id}
+                    id={card.id}
+                    hexCode={card.hexCode}
+                    name={card.name}
+                    onChangeHandler={onChangeHandler}
+                    onDeleteHandler={onDeleteHandler}
+                    onCopyHandler={onCopyHandler}
+                  />
+                ))}
             </ul>
-
             <hr />
           </section>
         );

@@ -7,10 +7,10 @@ const Create = ({
   colorPaletteId,
 }) => {
   return (
-    <li className="create__section">
+    <li className="create__box">
       <form
         name="createForm"
-        className="create__box"
+        className="create__form"
         style={{ backgroundColor: selectedColor }}
       >
         <input
