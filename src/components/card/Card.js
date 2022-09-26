@@ -1,4 +1,6 @@
 import "./Card.css";
+import { useEffect } from "react";
+
 import deleteIcon from "../../img/delete.svg";
 
 const Card = ({
@@ -8,17 +10,30 @@ const Card = ({
   onChangeCardHandler,
   onDeleteCardHandler,
   onCopyHandler,
+  setColorName,
 }) => {
+  const colorApiURL = "https://www.thecolorapi.com/id?hex=";
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const response = await fetch(colorApiURL + hexCode.substring(1));
+      const result = await response.json();
+      setColorName(result.name.value);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line
+  }, [hexCode]);
+
   return (
     <li
       className="card__box"
       style={{ backgroundColor: hexCode }}
       onClick={() => onCopyHandler(hexCode)}
     >
-      <button
-        className="card__delete"
-        onClick={(event) => onDeleteCardHandler(id, event)}
-      >
+      <button className="card__delete" onClick={onDeleteCardHandler}>
         <img className="card__delete__icon" src={deleteIcon} alt="" />
       </button>
       <span className="card__name">{name}</span>
