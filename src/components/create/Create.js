@@ -17,7 +17,7 @@ const Create = ({
           className="create__input"
           name="colorPicker"
           type="color"
-          onChange={(event) => onChangeSelectedColor(event.target.value)}
+          onChange={onChangeSelectedColor}
           value={selectedColor}
         />
         <input
@@ -25,7 +25,7 @@ const Create = ({
           name="colorText"
           type="text"
           onFocus={(event) => event.target.select()}
-          onChange={(event) => onChangeSelectedColor(event.target.value)}
+          onChange={onChangeSelectedColor}
           value={selectedColor}
         />
         <button

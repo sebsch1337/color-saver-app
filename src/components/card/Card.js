@@ -48,7 +48,7 @@ const Card = ({
       <input
         className="card__input"
         onClick={(event) => event.stopPropagation()}
-        onChange={(event) => onChangeCardHandler(id, event)}
+        onChange={onChangeCardHandler}
         maxLength="7"
         value={hexCode}
       />

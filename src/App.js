@@ -57,11 +57,11 @@ function App() {
     onChangeSelectedColor(colorPaletteId, randomHexCode());
   };
 
-  const onChangeSelectedColor = (id, defaultColor) => {
+  const onChangeSelectedColor = (id, event) => {
     setColorPalettes(
       colorPalettes.map((colorPalette) =>
         colorPalette.id === id
-          ? { ...colorPalette, defaultColor: defaultColor }
+          ? { ...colorPalette, defaultColor: event.target.value }
           : colorPalette
       )
     );
@@ -136,8 +136,8 @@ function App() {
             <ul className="card__list">
               <Create
                 selectedColor={colorPalette.defaultColor}
-                onChangeSelectedColor={(defaultColor) =>
-                  onChangeSelectedColor(colorPalette.id, defaultColor)
+                onChangeSelectedColor={(event) =>
+                  onChangeSelectedColor(colorPalette.id, event)
                 }
                 onSubmitHandler={onSubmitHandler}
                 colorPaletteId={colorPalette.id}
@@ -152,7 +152,9 @@ function App() {
                     id={card.id}
                     hexCode={card.hexCode}
                     name={card.name}
-                    onChangeCardHandler={onChangeCardHandler}
+                    onChangeCardHandler={(event) =>
+                      onChangeCardHandler(card.id, event)
+                    }
                     onDeleteCardHandler={(event) =>
                       onDeleteCardHandler(card.id, event)
                     }
