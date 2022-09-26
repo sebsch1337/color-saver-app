@@ -26,6 +26,15 @@ function App() {
   );
 
   useEffect(() => {
+    setCopyInfoClass("app__copy-info app__copy-info--active");
+    const timer = setTimeout(() => {
+      setCopyInfoClass("app__copy-info");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [copiedColor]);
+
+  useEffect(() => {
     localStorage.setItem("colorCards", JSON.stringify(colorCards));
   }, [colorCards]);
 
@@ -60,11 +69,7 @@ function App() {
 
   const onCopyHandler = (hexCode) => {
     setCopiedColor(hexCode);
-    setCopyInfoClass("app__copy-info app__copy-info--active");
     navigator.clipboard.writeText(hexCode);
-    setTimeout(() => {
-      setCopyInfoClass("app__copy-info");
-    }, 1500);
   };
 
   const setColorName = (id, colorName) => {
