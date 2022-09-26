@@ -27,7 +27,7 @@ const Card = ({
       } catch {
         setColorName("error fetching api");
       }
-    }, 500);
+    }, 200);
 
     return () => {
       clearTimeout(timer);
@@ -39,7 +39,7 @@ const Card = ({
     <li
       className="card__box"
       style={{ backgroundColor: hexCode }}
-      onClick={() => onCopyHandler(hexCode)}
+      onClick={onCopyHandler}
     >
       <button className="card__delete" onClick={onDeleteCardHandler}>
         <img className="card__delete__icon" src={deleteIcon} alt="" />
@@ -49,6 +49,7 @@ const Card = ({
         className="card__input"
         onClick={(event) => event.stopPropagation()}
         onChange={(event) => onChangeCardHandler(id, event)}
+        maxLength="7"
         value={hexCode}
       />
     </li>
