@@ -84,6 +84,7 @@
 
 .colorPalette_line {
   margin: 1em;
+  border: 1px solid black;
 }
 
 .colorPalette__add-button {

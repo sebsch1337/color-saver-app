@@ -6,15 +6,14 @@ import { v4 as uuid } from "uuid";
 import Card from "./components/card/Card";
 import Create from "./components/create/Create";
 
-const randomHexCode = () => {
-  let n = (Math.random() * 0xfffff * 1000000).toString(16);
-  return "#" + n.slice(0, 6);
-};
+const randomHexCode = () =>
+  "#" + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6);
 
 function App() {
   const [colorCards, setColorCards] = useState(
     JSON.parse(localStorage.getItem("colorCards")) || []
   );
+  //const [selectedColor, setSelectedColor] = useState([]);
   const [copyInfoClass, setCopyInfoClass] = useState("app__copy-info");
   const [copiedColor, setCopiedColor] = useState("");
   const [colorPalettes, setColorPalettes] = useState(
@@ -41,13 +40,14 @@ function App() {
     event.preventDefault();
     const response = await fetch(colorApiURL + selectedColor.substring(1));
     const result = await response.json();
+    const colorName = result.name.value;
 
     setColorCards((prev) => [
       ...prev,
       {
         id: uuid().slice(0, 8),
         hexCode: selectedColor,
-        name: result.name.value,
+        name: colorName,
         colorPaletteId: colorPaletteId,
       },
     ]);
@@ -73,11 +73,17 @@ function App() {
     }, 1500);
   };
 
-  const onChangeHandler = (id, event) => {
+  const onChangeCardHandler = async (id, event) => {
+    console.log(id);
+    let colorName = "default";
+    const response = await fetch(colorApiURL + event.target.value.substring(1));
+    const result = await response.json();
+    colorName = result.name.value;
+
     setColorCards(
       colorCards.map((colorCard) =>
         colorCard.id === id
-          ? { ...colorCard, hexCode: event.target.value }
+          ? { ...colorCard, hexCode: event.target.value, name: colorName }
           : colorCard
       )
     );
@@ -93,7 +99,7 @@ function App() {
     );
   };
 
-  const onDeleteHandler = (id, event) => {
+  const onDeleteCardHandler = (id, event) => {
     event.stopPropagation();
     setColorCards((prevCards) =>
       prevCards.filter((colorCard) => colorCard.id !== id)
@@ -142,8 +148,8 @@ function App() {
                     id={card.id}
                     hexCode={card.hexCode}
                     name={card.name}
-                    onChangeHandler={onChangeHandler}
-                    onDeleteHandler={onDeleteHandler}
+                    onChangeCardHandler={onChangeCardHandler}
+                    onDeleteCardHandler={onDeleteCardHandler}
                     onCopyHandler={onCopyHandler}
                   />
                 ))}

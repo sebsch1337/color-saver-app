@@ -5,8 +5,8 @@ const Card = ({
   id,
   hexCode,
   name,
-  onChangeHandler,
-  onDeleteHandler,
+  onChangeCardHandler,
+  onDeleteCardHandler,
   onCopyHandler,
 }) => {
   return (
@@ -17,7 +17,7 @@ const Card = ({
     >
       <button
         className="card__delete"
-        onClick={(event) => onDeleteHandler(id, event)}
+        onClick={(event) => onDeleteCardHandler(id, event)}
       >
         <img className="card__delete__icon" src={deleteIcon} alt="" />
       </button>
@@ -25,7 +25,7 @@ const Card = ({
       <input
         className="card__input"
         onClick={(event) => event.stopPropagation()}
-        onChange={(event) => onChangeHandler(id, event)}
+        onChange={(event) => onChangeCardHandler(id, event)}
         value={hexCode}
       />
     </li>
