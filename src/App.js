@@ -26,11 +26,9 @@ function App() {
   );
 
   useEffect(() => {
-    setCopyInfoClass("app__copy-info app__copy-info--active");
     const timer = setTimeout(() => {
       setCopyInfoClass("app__copy-info");
     }, 1500);
-
     return () => clearTimeout(timer);
   }, [copiedColor]);
 
@@ -54,20 +52,21 @@ function App() {
         colorPaletteId: colorPaletteId,
       },
     ]);
-    onChangeSelectedColor(colorPaletteId, randomHexCode());
+    changeSelectedColor(colorPaletteId, randomHexCode());
   };
 
-  const onChangeSelectedColor = (id, event) => {
+  const changeSelectedColor = (id, defaultColor) => {
     setColorPalettes(
       colorPalettes.map((colorPalette) =>
         colorPalette.id === id
-          ? { ...colorPalette, defaultColor: event.target.value }
+          ? { ...colorPalette, defaultColor: defaultColor }
           : colorPalette
       )
     );
   };
 
   const onCopyHandler = (hexCode) => {
+    setCopyInfoClass("app__copy-info app__copy-info--active");
     setCopiedColor(hexCode);
     navigator.clipboard.writeText(hexCode);
   };
@@ -137,9 +136,15 @@ function App() {
               <Create
                 selectedColor={colorPalette.defaultColor}
                 onChangeSelectedColor={(event) =>
-                  onChangeSelectedColor(colorPalette.id, event)
+                  changeSelectedColor(colorPalette.id, event.target.value)
                 }
-                onSubmitHandler={onSubmitHandler}
+                onSubmitHandler={(event) =>
+                  onSubmitHandler(
+                    event,
+                    colorPalette.id,
+                    colorPalette.defaultColor
+                  )
+                }
                 colorPaletteId={colorPalette.id}
               />
               {colorCards

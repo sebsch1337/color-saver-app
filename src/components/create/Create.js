@@ -32,9 +32,7 @@ const Create = ({
           className="create__input create__input--colortext"
           name="addButton"
           type="submit"
-          onClick={(event) =>
-            onSubmitHandler(event, colorPaletteId, selectedColor)
-          }
+          onClick={onSubmitHandler}
         >
           ADD
         </button>
