@@ -73,18 +73,21 @@ function App() {
     }, 1500);
   };
 
+  const setColorName = (id, colorName) => {
+    setColorCards(
+      colorCards.map((colorCard) =>
+        colorCard.id === id ? { ...colorCard, name: colorName } : colorCard
+      )
+    );
+  };
+
   const onChangeCardHandler = async (id, event) => {
     console.log(id);
-    let colorName = "default";
-    const response = await fetch(colorApiURL + event.target.value.substring(1));
-    const result = await response.json();
-    colorName = result.name.value;
+    const newHexCode = event.target.value;
 
     setColorCards(
       colorCards.map((colorCard) =>
-        colorCard.id === id
-          ? { ...colorCard, hexCode: event.target.value, name: colorName }
-          : colorCard
+        colorCard.id === id ? { ...colorCard, hexCode: newHexCode } : colorCard
       )
     );
   };
@@ -134,7 +137,9 @@ function App() {
             <ul className="card__list">
               <Create
                 selectedColor={colorPalette.defaultColor}
-                onChangeSelectedColor={onChangeSelectedColor}
+                onChangeSelectedColor={(defaultColor) =>
+                  onChangeSelectedColor(colorPalette.id, defaultColor)
+                }
                 onSubmitHandler={onSubmitHandler}
                 colorPaletteId={colorPalette.id}
               />
@@ -149,7 +154,12 @@ function App() {
                     hexCode={card.hexCode}
                     name={card.name}
                     onChangeCardHandler={onChangeCardHandler}
-                    onDeleteCardHandler={onDeleteCardHandler}
+                    onDeleteCardHandler={(event) =>
+                      onDeleteCardHandler(card.id, event)
+                    }
+                    setColorName={(colorName) =>
+                      setColorName(card.id, colorName)
+                    }
                     onCopyHandler={onCopyHandler}
                   />
                 ))}
