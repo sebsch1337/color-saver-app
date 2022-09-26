@@ -37,6 +37,10 @@
   }
 }
 
+.app__header {
+  padding: 1em;
+}
+
 .app__copy-info {
   position: fixed;
   bottom: 1vh;
@@ -53,4 +57,40 @@
 .app__copy-info--active {
   right: 1vw;
   transition: all ease-out 0.3s;
+}
+
+.colorPalette__header-input {
+  width: 100vw;
+  padding: 1rem 0 0 2rem;
+  background-color: transparent;
+  border: 0;
+  font-size: 1.6em;
+  transition: all ease-in 0.2s;
+}
+
+.colorPalette__header-input:focus {
+  outline: none;
+  font-size: 2em;
+  transition: all ease-in 0.2s;
+}
+
+.card__list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 2em;
+  padding: 1em 2em;
+}
+
+.colorPalette_line {
+  margin: 1em;
+  border: 1px solid black;
+}
+
+.colorPalette__add-button {
+  margin: 1em;
+  padding: 0.8rem;
+  font-size: 1em;
+  border: 3px solid black;
+  border-radius: 5px;
 }
