@@ -26,11 +26,9 @@ function App() {
   );
 
   useEffect(() => {
-    setCopyInfoClass("app__copy-info app__copy-info--active");
     const timer = setTimeout(() => {
       setCopyInfoClass("app__copy-info");
     }, 1500);
-
     return () => clearTimeout(timer);
   }, [copiedColor]);
 
@@ -54,10 +52,10 @@ function App() {
         colorPaletteId: colorPaletteId,
       },
     ]);
-    onChangeSelectedColor(colorPaletteId, randomHexCode());
+    changeSelectedColor(colorPaletteId, randomHexCode());
   };
 
-  const onChangeSelectedColor = (id, defaultColor) => {
+  const changeSelectedColor = (id, defaultColor) => {
     setColorPalettes(
       colorPalettes.map((colorPalette) =>
         colorPalette.id === id
@@ -68,6 +66,7 @@ function App() {
   };
 
   const onCopyHandler = (hexCode) => {
+    setCopyInfoClass("app__copy-info app__copy-info--active");
     setCopiedColor(hexCode);
     navigator.clipboard.writeText(hexCode);
   };
@@ -136,10 +135,16 @@ function App() {
             <ul className="card__list">
               <Create
                 selectedColor={colorPalette.defaultColor}
-                onChangeSelectedColor={(defaultColor) =>
-                  onChangeSelectedColor(colorPalette.id, defaultColor)
+                onChangeSelectedColor={(event) =>
+                  changeSelectedColor(colorPalette.id, event.target.value)
                 }
-                onSubmitHandler={onSubmitHandler}
+                onSubmitHandler={(event) =>
+                  onSubmitHandler(
+                    event,
+                    colorPalette.id,
+                    colorPalette.defaultColor
+                  )
+                }
                 colorPaletteId={colorPalette.id}
               />
               {colorCards
@@ -152,7 +157,9 @@ function App() {
                     id={card.id}
                     hexCode={card.hexCode}
                     name={card.name}
-                    onChangeCardHandler={onChangeCardHandler}
+                    onChangeCardHandler={(event) =>
+                      onChangeCardHandler(card.id, event)
+                    }
                     onDeleteCardHandler={(event) =>
                       onDeleteCardHandler(card.id, event)
                     }
