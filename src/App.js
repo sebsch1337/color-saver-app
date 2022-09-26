@@ -3,6 +3,8 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
+import deleteIcon from "./img/delete.svg";
+
 import Card from "./components/card/Card";
 import Create from "./components/create/Create";
 
@@ -118,12 +120,22 @@ function App() {
     ]);
   };
 
+  const onDeletePaletteHandler = (id, event) => {
+    event.stopPropagation();
+    setColorCards(
+      colorCards.filter((colorCard) => colorCard.colorPaletteId !== id)
+    );
+    setColorPalettes(
+      colorPalettes.filter((colorPalette) => colorPalette.id !== id)
+    );
+  };
+
   return (
     <div className="App">
       <h1 className="app__header">Color Saver App</h1>
       {colorPalettes.map((colorPalette) => {
         return (
-          <section key={colorPalette.id}>
+          <section className="colorPalette__section" key={colorPalette.id}>
             <input
               type="text"
               className="colorPalette__header-input"
@@ -132,6 +144,18 @@ function App() {
                 onChangePaletteNameHandler(colorPalette.id, event)
               }
             />
+            <button
+              className="colorPalette__delete"
+              onClick={(event) =>
+                onDeletePaletteHandler(colorPalette.id, event)
+              }
+            >
+              <img
+                className="colorPalette__delete__icon"
+                src={deleteIcon}
+                alt=""
+              />
+            </button>
             <ul className="card__list">
               <Create
                 selectedColor={colorPalette.defaultColor}
