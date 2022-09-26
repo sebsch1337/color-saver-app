@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import deleteIcon from "../../img/delete.svg";
 
 const Card = ({
-  id,
   hexCode,
   name,
   onChangeCardHandler,

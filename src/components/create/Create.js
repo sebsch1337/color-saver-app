@@ -1,11 +1,6 @@
 import "./Create.css";
 
-const Create = ({
-  selectedColor,
-  onChangeSelectedColor,
-  onSubmitHandler,
-  colorPaletteId,
-}) => {
+const Create = ({ selectedColor, onChangeSelectedColor, onSubmitHandler }) => {
   return (
     <li className="create__box">
       <form
