@@ -16,9 +16,17 @@ const Card = ({
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const response = await fetch(colorApiURL + hexCode.substring(1));
-      const result = await response.json();
-      setColorName(result.name.value);
+      let colorName = "...";
+      try {
+        if (hexCode.length === 4 || hexCode.length === 7) {
+          const response = await fetch(colorApiURL + hexCode.substring(1));
+          const result = await response.json();
+          colorName = result.name.value;
+        }
+        setColorName(colorName);
+      } catch {
+        setColorName("error fetching api");
+      }
     }, 500);
 
     return () => {
